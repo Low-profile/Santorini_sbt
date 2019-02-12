@@ -10,20 +10,10 @@ object Main extends App {
     args.foreach(println)
   }
 
-  //val testjson = " {\"turn\":19,\n  \"players\":[[[3,5],[2,5]],[[3,4],[4,4]]],\n  \"spaces\":[[0,0,0,0,2],[1,1,2,0,0],[1,0,0,3,0],[0,0,3,0,0],[0,0,0,1,4]]}\n"
-
-  val testjson = Iterator.
-    continually(scala.io.StdIn.readLine).
-    takeWhile(_ != null).
-    mkString("\n")
-
   case class Board(turn: Int, players: Players, spaces: Space)
 
   implicit val boardFormat = jsonFormat3(Board)
 
-  val gameBoard = testjson.parseJson.convertTo[Board]
-
-  //List(List(-1, -1), List(-1, 0), List(-1, 1), List(0, -1), List(0, 1), List(1, -1), List(1, 0), List(1, 1))
   val directions = List(-1, 0, 1).flatMap(x => List(-1, 0, 1).map(y => List(x, y))).filterNot(_ == List(0, 0))
 
 
@@ -63,6 +53,10 @@ object Main extends App {
         .updated(c, v))
   }
 
+  def changePlayer(p: Players): Players = {
+    List(p(1),p(0))
+  }
+
   def updateSpace(b: Space, r: Int, c: Int, v: Int): Space = {
     b
       .updated(r, b(r)
@@ -73,7 +67,7 @@ object Main extends App {
     val turn = b.turn + 1
 
     val move = nextStep._1
-    val player = updatePlayer(b.players, token_idx, move)
+    val player = changePlayer(updatePlayer(b.players, token_idx, move))
 
     val build = nextStep._2
     val r = build(0)-1
@@ -135,17 +129,49 @@ object Main extends App {
   }
 
 
-  val potentialMoves = availableMove(gameBoard)
+  def main(): Unit ={
 
-  // move build pairs
-  val steps = availableBuild(gameBoard,potentialMoves)
+    val testjson = " {\"turn\":19, \"players\":[[[3,5],[2,5]],[[3,4],[4,4]]],  \"spaces\":[[0,0,0,0,2],[1,1,2,0,0],[1,0,0,3,0],[0,0,3,0,0],[0,0,0,1,4]]}"
 
-  val new_board =  if (steps(0).isEmpty)
-    makeStep(gameBoard,steps(1)(0),1)
-  else
-    makeStep(gameBoard,steps(0)(0),0)
+    //  val testjson = Iterator.
+    //    continually(scala.io.StdIn.readLine).
+    //    takeWhile(_ != null).
+    //    mkString("\n")
+    val gameBoard = testjson.parseJson.convertTo[Board]
+    //List(List(-1, -1), List(-1, 0), List(-1, 1), List(0, -1), List(0, 1), List(1, -1), List(1, 0), List(1, 1))
 
-  print(testjson)
-  print(new_board.toJson)
+    if (gameBoard.players.isEmpty){
+      val turn = 0
+
+      val player = List(List(3,3),List(4,4))
+
+      val build = nextStep._2
+      val r = build(0)-1
+      val c = build(1)-1
+      val space = updateSpace(b.spaces, r , c, b.spaces(r)(c) + 1)
+
+      Board(turn,player,space)
+    }else if(gameBoard.players.length == 1){
+
+    } else{
+      val potentialMoves = availableMove(gameBoard)
+      // move build pairs
+      val steps = availableBuild(gameBoard,potentialMoves)
+
+      val new_board =  if (steps(0).isEmpty)
+        makeStep(gameBoard,steps(1)(0),1)
+      else
+        makeStep(gameBoard,steps(0)(0),0)
+
+      //println(testjson)
+      println(new_board.toJson)
+    }
+
+
+
+
+  }
+
+  main()
 
 }
