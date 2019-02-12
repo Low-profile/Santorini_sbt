@@ -28,6 +28,7 @@ def availableMove(b: Board): List[List[List[Int]]] = {
       val surroundings = directions.map(
         d => t.zip(d).map(
           x => x._1 + x._2))
+      print(surroundings)
       //surroundings
       surroundings.filterNot {
         l => {
@@ -63,59 +64,11 @@ def updateSpace(b: Space, r: Int, c: Int, v: Int): Space = {
       .updated(c, v))
 }
 
-def evaluateMoves(b: Board, move: List[List[List[Int]]]): List[(Int,Int)] = {
-  //Todo: add strategy here
-  //number of possible moves + number of winning move
-  //val construction = List.fill(move.length)(1)
-  val tmp = move.map {
-    t => {
-      val build_position = t.zipWithIndex.flatMap { case (m, idx) => {
-        val newPlayer = updatePlayer(b.players, idx, m)
-        val surroundings = directions.map(
-          d => m.zip(d).map(
-            x => x._1 + x._2))
-        surroundings.filterNot {
-          l => {
-            val r = l(0) - 1
-            val c = l(1) - 1
-            lazy val notOnBoard = r < 0 || r >= 5 || c < 0 || c >= 5
-            lazy val isTokenPositioned = newPlayer.exists(_.contains(l))
-            lazy val isTowerBuilt = b.spaces(r)(c) == 4
-            (notOnBoard || isTokenPositioned || isTowerBuilt)
-          }
-        }
-      }}
-      val newSpace: List[Space] = build_position.map(
-        m => {
-          val r = m(0) - 1
-          var c = m(1) - 1
-          updateSpace(b.spaces, r, c, b.spaces(r)(c))
-        }
-      )
-      val idx = newSpace.map(s => {
-        val newBoard = Board(b.turn, b.players, s)
-        evaluateBoard(newBoard)
-      }
-      ).zipWithIndex.maxBy(_._1)_.2
-    }
-  }
-  print(tmp)
-  tmp
-  //    move.flatten.distinct.map {
-  //      //l => if (b.spaces(l(0))(l(1)) == 3) l
-  //      l => evaluateBoard()
-  //    }
-
-
-  //List(move(0),List(1))
-}
-
-
 
 val potentialMoves = availableMove(res)
 printList(potentialMoves)
-val result = evaluateMoves(res, potentialMoves)
-printList(result)
+//val result = evaluateMoves(res, potentialMoves)
+//printList(result)
 //def solve(b: Board, depth : Int, evaluations : List[(List[Int],Int)]) = {
 //  if (depth == 0) None
 //  else if (depth == 1){

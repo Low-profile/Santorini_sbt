@@ -7,7 +7,7 @@
 		revision="0.1"
 		conf="test"
 		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, pom, scala-tool"
-		date="20190205023911"/>
+		date="20190212075528"/>
 	<dependencies>
 		<module organisation="io.spray" name="spray-json_2.12">
 			<revision name="1.3.5" status="release" pubdate="20181108061646" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/spray/spray-json" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="1">
@@ -15,7 +15,7 @@
 				<metadata-artifact status="no" details="" size="3114" time="0" location="C:\Users\ruoya\.ivy2\cache\io.spray\spray-json_2.12\ivy-1.3.5.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/io/spray/spray-json_2.12/1.3.5/spray-json_2.12-1.3.5.pom"/>
 				<caller organisation="default" name="santorini_sbt$sources" conf="test, compile, runtime" rev="1.3.5" rev-constraint-default="1.3.5" rev-constraint-dynamic="1.3.5" callerrev="0.1"/>
 				<artifacts>
-					<artifact name="spray-json_2.12" type="src" ext="jar" extra-classifier="sources" status="successful" details="" size="25072" time="391" location="C:\Users\ruoya\.ivy2\cache\io.spray\spray-json_2.12\srcs\spray-json_2.12-1.3.5-sources.jar">
+					<artifact name="spray-json_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="25072" time="0" location="C:\Users\ruoya\.ivy2\cache\io.spray\spray-json_2.12\srcs\spray-json_2.12-1.3.5-sources.jar">
 						<origin-location is-local="false" location="https://repo1.maven.org/maven2/io/spray/spray-json_2.12/1.3.5/spray-json_2.12-1.3.5-sources.jar"/>
 					</artifact>
 				</artifacts>

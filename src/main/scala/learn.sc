@@ -1,1 +1,3 @@
-List(1, 2, 3).zip(List(1, 2, 3))
+List(List(1, 2)).zip(List(List(1, 2)))
+
+List(List(1, 2)).zipWithIndex

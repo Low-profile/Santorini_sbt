@@ -4,7 +4,7 @@
 		module="santorini_sbt$sources"
 		revision="0.1"
 		status="integration"
-		publication="20190205023911"
+		publication="20190212075528"
 	/>
 	<configurations>
 		<conf name="compile" visibility="public" description=""/>
